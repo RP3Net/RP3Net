@@ -1,0 +1,10 @@
+trainer:
+  enable_progress_bar: false
+  devices: 1
+  num_nodes: 1
+  max_epochs: 2
+  limit_train_batches: 3
+  limit_val_batches: 3
+  limit_test_batches: 3
+  log_every_n_steps: 1
+  accelerator: cpu
