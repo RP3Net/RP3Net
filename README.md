@@ -1,5 +1,5 @@
 # RP3Net
-RP3Net is an AI model for predicting the success of recombinant small-scale protein production in _E. Coli_ from the construct sequence. See [the preprint]() for more details on how it works.
+RP3Net is an AI model for predicting the results of recombinant small-scale protein production in _E. Coli_ from the construct sequence. See [the preprint]() for more details on how it works.
 
 # Checkpoints
 * **TODO** links for downloading public checkpoints
