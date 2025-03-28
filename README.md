@@ -30,7 +30,7 @@ print(score_map)
 # {'seq1': 0.4223055839538574, 'seq2': 0.41336774826049805, 'seq3': 0.4165498912334442}
 ```
 
-The `load_model` function returns the model object that can be used directly for prediction (`predict`), but is otherwise a fully functional implementation of a [Pytorch module](https://pytorch.org/docs/stable/generated/torch.nn.Module.html), so can be used for computing gradients and training as well. The `predict` method accepts either a list of sequences as strings, or a dictionary of sequences keyed by their ids. The return type depends on the input, and is either a one-dimensional tensor or a dictionary of floats. In the former case the order of the scores corresponds to the order of the input sequences, in the latter case the dictionary is keyed by the sequence ids.
+The `load_model` function returns the model object that can be used directly for prediction (`predict`), and is otherwise a fully functional implementation of a [Pytorch module](https://pytorch.org/docs/stable/generated/torch.nn.Module.html), so can be used for computing gradients and training as well. The `predict` method accepts either a list of sequences as strings, or a dictionary of sequences keyed by their ids. The return type depends on the input, and is either a one-dimensional tensor or a dictionary of floats. In the former case the order of the scores corresponds to the order of the input sequences, in the latter case the dictionary is keyed by the sequence ids.
 
 ## Performance and resource usage
 The command line verstion on a modern CPU (base frequency 2.6 GHz) for a batch of 16 constructs with length under 500aa runs in about 3 minutes, using under 5Gb of RAM.
