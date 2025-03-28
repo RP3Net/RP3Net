@@ -43,11 +43,11 @@ Note that installation for inference does not bring in the libraries that are us
 pip install 'RP3Net[training] @ git+https://github.com/RP3Net/RP3Net'
 ```
 
-# Command line interface
+## Command line
 ```
 rp3_train fit -c <training_config_file>
 ```
 Examples of trainer cofigs can be found under `config` folder. Training is managed by [Pytorch Lightning CLI](https://lightning.ai/docs/pytorch/stable/cli/lightning_cli.html); more information can be found by typing `rp3_train -h`
 
-# Training data
+## Training data
 * **TODO** links to training data
