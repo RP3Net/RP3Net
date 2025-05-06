@@ -1,0 +1,66 @@
+ckpt_path: last
+seed_everything: 42
+test_after_fit_metric: full_val_auc_roc
+track_metric_checkpoints: best
+data:
+  class_path: RP3Net.training.data.RP3SequenceEmbeddingsLDM
+  init_args:
+    hypers:
+      sources: 
+      - SGC_Stockholm
+      - SGC_Toronto
+      ds_path: ~/rp3/prod/v0.1/data/rp3.csv.gz
+      embeddings_file: ~/data/pp/ai/embeddings/16_01/esm2_t33_650M_UR50D_unpooled.zip
+      test_val_seed: 42
+      seed: 42
+      training_batch_size: 8
+      val_test_batch_size: 8
+model:
+  class_path: RP3Net.training.lm.RP3LM
+  init_args:
+    hypers:
+      sources: 
+      - SGC_Stockholm
+      - SGC_Toronto
+      model:
+        mode: Training_B
+        fm:
+          type: esm2_650m
+        aggregation: stp
+        stp:
+          seq_dim: 1280
+          d: 256
+          num_heads: 8
+          layer_norm: True
+          p_drop: 0.1
+        classification_head:
+          embedding_dim: 256
+          bias: false
+          end_bias: true
+          layer_norm: false
+          p_drop: 0.1
+          layers: 
+            d: 256
+            n: 1
+          nonlinearity: SiLU
+optimizer:
+  class_path: torch.optim.Adam
+  init_args:
+    lr: 1.0e-5
+    weight_decay: 0.0
+trainer:
+  callbacks:
+  - class_path: lightning.pytorch.callbacks.EarlyStopping
+    init_args:
+      check_on_train_epoch_end: false
+      log_rank_zero_only: true
+      min_delta: 0.0001
+      mode: max
+      monitor: full_val_auc_roc
+      patience: 10
+      stopping_threshold: 0.99
+      strict: true
+      verbose: true
+  - class_path: lightning.pytorch.callbacks.LearningRateMonitor
+    init_args:
+      logging_interval: epoch

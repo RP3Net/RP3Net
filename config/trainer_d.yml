@@ -1,0 +1,143 @@
+ckpt_path: last
+seed_everything: 42
+test_after_fit_metric: full_val_auc_roc
+track_metric_checkpoints: best
+data:
+  class_path: RP3Net.training.data_emlc.EmlcLDM
+  init_args:
+    hypers:
+      sources: 
+      - SGC_Stockholm
+      - SGC_Toronto
+      clean_sources:
+      - SGC_Stockholm
+      ds_path: ~/rp3/prod/v0.1/data/rp3.csv.gz
+      fasta_path: ~/rp3/prod/v0.1/data/rp3.fasta.gz
+      fasta_id_col: fasta_id
+      test_val_seed: 42
+      seed: 42
+      training_batch_size: 2
+      val_test_batch_size: 4
+      emlc_k: 3
+      max_seq_len: 50
+model:
+  class_path: RP3Net.training.lm_emlc.EmlcLM
+  init_args:
+    hypers:
+      sources: 
+      - SGC_Stockholm
+      - SGC_Toronto
+      clean_sources:
+      - SGC_Stockholm
+      emlc_k: 3
+      mix_g: true
+      auxiliary_loss: true
+      jvp_ad_method: forward
+      model:
+        mode: Training_D
+        fm:
+          type: esm2_650m
+          lora:
+            r: 8
+            lora_alpha: 1.0
+            target_modules: 
+            - query
+            - key
+            - value
+            lora_dropout: 0.1
+            bias: lora_only
+        aggregation: stp
+        stp:
+          seq_dim: 1280
+          d: 256
+          num_heads: 8
+          layer_norm: True
+          p_drop: 0.1
+          can_use_efficient: false
+        classification_head:
+          embedding_dim: 256
+          bias: false
+          end_bias: true
+          layer_norm: false
+          p_drop: 0.1
+          layers: 
+            d: 256
+            n: 1
+          nonlinearity: SiLU
+      enhancer:
+        label_embedding_dim: 256
+        embedding_dim: 256
+        hidden_dim: 256
+      opt: 
+        student:
+          class_path: torch.optim.Adam
+          init_args:
+            lr: 5.0e-5
+            weight_decay: 0.0
+        teacher:
+          class_path: torch.optim.Adam
+          init_args:
+            lr: 5.0e-5
+            weight_decay: 0.0
+        enhancer:   
+          class_path: torch.optim.Adam
+          init_args:
+            lr: 5.0e-5
+            weight_decay: 0.0
+      lrs:
+        student:
+          class_path: torch.optim.lr_scheduler.ReduceLROnPlateau
+          init_args:
+            mode: max
+            factor: 0.25
+            patience: 5
+            verbose: true
+            threshold: 0.0001
+            threshold_mode: abs
+        teacher:
+          class_path: torch.optim.lr_scheduler.ReduceLROnPlateau
+          init_args:
+            mode: max
+            factor: 0.25
+            patience: 5
+            verbose: true
+            threshold: 0.0001
+            threshold_mode: abs
+        enhancer:
+          class_path: torch.optim.lr_scheduler.ReduceLROnPlateau
+          init_args:
+            mode: max
+            factor: 0.25
+            patience: 5
+            verbose: true
+            threshold: 0.0001
+            threshold_mode: abs
+      lrs_conf:
+        student:
+          monitor: full_val_auc_roc
+          name: lr_student
+        teacher:
+          monitor: full_val_auc_roc
+          name: lr_teacher
+        enhancer:
+          monitor: full_val_auc_roc
+          name: lr_enhancer
+trainer:
+  use_distributed_sampler: false
+  strategy: ddp_find_unused_parameters_true
+  enable_progress_bar: false
+  callbacks:
+  - class_path: lightning.pytorch.callbacks.EarlyStopping
+    init_args:
+      check_on_train_epoch_end: false
+      log_rank_zero_only: true
+      min_delta: 0.0001
+      mode: max
+      monitor: full_val_auc_roc
+      patience: 10
+      stopping_threshold: 0.99
+      strict: true
+      verbose: true
+  - class_path: lightning.pytorch.callbacks.LearningRateMonitor
+    init_args:
+      logging_interval: epoch

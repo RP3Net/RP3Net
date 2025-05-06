@@ -1,0 +1,11 @@
+trainer:
+  default_root_dir: /tmp/pp/
+  accelerator: gpu
+  devices: 1
+  enable_progress_bar: true
+  num_nodes: 1
+  max_epochs: 5
+  limit_train_batches: 10
+  limit_val_batches: 10
+  limit_test_batches: 10
+  log_every_n_steps: 5

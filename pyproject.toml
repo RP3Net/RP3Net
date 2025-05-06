@@ -1,0 +1,39 @@
+[build-system]
+requires = ["setuptools>=64", "setuptools_scm[toml]>=8"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "RP3Net"
+version = "0.0.1"
+description = "RP3Net: Modelling of recombinant soluble protein production in E. coli"
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "MIT" }
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Programming Language :: Python :: 3",
+    "Operating System :: OS Independent",
+]
+maintainers = [
+    {name = "Evgeny Tankhilevich", email = "evgeny@ebi.ac.uk"},
+]
+dependencies = [
+    "torch==2.5.*",
+    "pandas",
+    "transformers==4.46.*",
+    "ml_collections",
+    "peft",
+    "tqdm"
+]
+
+[project.optional-dependencies]
+training = [
+    "lightning[pytorch-extra]",
+    "polars==1.27.*",
+    "wandb"
+]
+
+[project.scripts]
+rp3 = "RP3Net:rp3_main"
+rp3_train = "RP3Net:rp3_train"
+

@@ -1,0 +1,59 @@
+ckpt_path: last
+seed_everything: 42
+test_after_fit_metric: full_val_auc_roc
+track_metric_checkpoints: best
+data:
+  class_path: RP3Net.training.data.RP3GlobalEmbeddingsLDM
+  init_args:
+    hypers:
+      sources: 
+      - SGC_Stockholm
+      ds_path: ~/rp3/prod/v0.1/data/rp3.csv.gz
+      embeddings_file: ~/data/pp/ai/embeddings/16_01/esm2_t33_650M_UR50D_mean.pt
+      test_val_seed: 42
+      seed: 42
+      training_batch_size: 8
+      val_test_batch_size: 8
+model:
+  class_path: RP3Net.training.lm.RP3LM
+  init_args:
+    hypers:
+      sources: 
+      - SGC_Stockholm
+      model:
+        mode: Training_A
+        fm:
+          type: esm2_650m
+        aggregation: mean
+        classification_head:
+          embedding_dim: 1280
+          bias: false
+          end_bias: true
+          layer_norm: false
+          p_drop: 0.1
+          layers: 
+            d: 1280
+            n: 1
+          nonlinearity: SiLU
+optimizer:
+  class_path: torch.optim.Adam
+  init_args:
+    lr: 1.0e-5
+    weight_decay: 0.0
+trainer:
+  enable_progress_bar: false
+  callbacks:
+  - class_path: lightning.pytorch.callbacks.EarlyStopping
+    init_args:
+      check_on_train_epoch_end: false
+      log_rank_zero_only: true
+      min_delta: 0.0001
+      mode: max
+      monitor: full_val_auc_roc
+      patience: 10
+      stopping_threshold: 0.99
+      strict: true
+      verbose: true
+  - class_path: lightning.pytorch.callbacks.LearningRateMonitor
+    init_args:
+      logging_interval: epoch
