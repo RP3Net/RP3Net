@@ -1,3 +1,5 @@
+.scripts
+.vscode
 .venv
 scratch*
 .secrets
