@@ -7,7 +7,7 @@ name = "RP3Net"
 version = "0.0.1"
 description = "RP3Net: Modelling of recombinant soluble protein production in E. coli"
 readme = "README.md"
-requires-python = ">=3.10"
+requires-python = ">=3.10,<4.0"
 license = { text = "MIT" }
 classifiers = [
     "Development Status :: 3 - Alpha",
