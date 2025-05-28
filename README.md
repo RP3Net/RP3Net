@@ -1,4 +1,10 @@
 # RP3Net
+
+
+[![CI](https://github.com/RP3Net/RP3Net/actions/workflows/python-app.yml/badge.svg)](https://github.com/RP3Net/RP3Net/actions/workflows/python-app.yml)
+[![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/RP3Net/RP3Net/blob/main/rp3_colab.ipynb)
+[![DOI:10.1101/2025.05.13.652824](http://img.shields.io/badge/DOI-10.1101/2021.01.08.425840-B31B1B.svg)](https://doi.org/10.1101/2025.05.13.652824)
+
 RP3Net is an AI model for predicting the results of recombinant small-scale protein production in _E. coli_ from the construct sequence. See [the preprint](https://www.biorxiv.org/content/10.1101/2025.05.13.652824v1) and [supplements](https://ftp.ebi.ac.uk/pub/software/RP3Net/) for more details on how it works.
 
 # Checkpoints
