@@ -1,5 +1,5 @@
 # RP3Net
-RP3Net is an AI model for predicting the results of recombinant small-scale protein production in _E. coli_ from the construct sequence. See [the preprint](https://www.biorxiv.org/content/10.1101/2025.05.13.652824v1) and [supplements](https://ftp.ebi.ac.uk/pub/software/RP3Net/publication/) for more details on how it works.
+RP3Net is an AI model for predicting the results of recombinant small-scale protein production in _E. coli_ from the construct sequence. See [the preprint](https://www.biorxiv.org/content/10.1101/2025.05.13.652824v1) and [supplements](https://ftp.ebi.ac.uk/pub/software/RP3Net/) for more details on how it works.
 
 # Checkpoints
 * https://ftp.ebi.ac.uk/pub/software/RP3Net/v0.1/checkpoints/
@@ -7,7 +7,7 @@ RP3Net is an AI model for predicting the results of recombinant small-scale prot
 # Inference
 ## Installation
 ```
-pip install git+https://github.com/RP3Net/RP3Net
+pip install RP3Net
 ```
 
 ## Command line
@@ -40,7 +40,7 @@ Note that installation for inference does not bring in the libraries that are us
 
 ## Installation
 ```
-pip install 'RP3Net[training] @ git+https://github.com/RP3Net/RP3Net'
+pip install 'RP3Net[training]'
 ```
 
 ## Command line

@@ -3,7 +3,7 @@ name: Publish Python distribution to PyPI and TestPyPI
 on: 
   push:
     tags:
-      - 'v*.*.*'  # Trigger on version tags like v1.0.0
+      - 'v[0-9]+.[0-9]+.[0-9]+'  # Trigger on version tags like v1.0.0
 
 jobs:
   build:
@@ -28,36 +28,14 @@ jobs:
         name: python-package-distributions
         path: dist/
 
-#   publish-to-pypi:
-#     name: Publish Python distribution to PyPI
-#     needs:
-#     - build
-#     runs-on: ubuntu-latest
-#     environment:
-#       name: pypi
-#       url: https://pypi.org/p/<package-name>  # Replace <package-name> with your PyPI project name
-#     permissions:
-#       id-token: write  # IMPORTANT: mandatory for trusted publishing
-
-#     steps:
-#     - name: Download all the dists
-#       uses: actions/download-artifact@v4
-#       with:
-#         name: python-package-distributions
-#         path: dist/
-#     - name: Publish distribution to PyPI
-#       uses: pypa/gh-action-pypi-publish@release/v1
-
-  publish-to-testpypi:
-    name: Publish Python distribution to TestPyPI
+  publish-to-pypi:
+    name: Publish Python distribution to PyPI
     needs:
     - build
     runs-on: ubuntu-latest
-
     environment:
-      name: testpypi
-      url: https://test.pypi.org/p/<package-name>
-
+      name: pypi
+      url: https://pypi.org/p/<package-name>  # Replace <package-name> with your PyPI project name
     permissions:
       id-token: write  # IMPORTANT: mandatory for trusted publishing
 
@@ -67,7 +45,5 @@ jobs:
       with:
         name: python-package-distributions
         path: dist/
-    - name: Publish distribution to TestPyPI
+    - name: Publish distribution to PyPI
       uses: pypa/gh-action-pypi-publish@release/v1
-      with:
-        repository-url: https://test.pypi.org/legacy/
