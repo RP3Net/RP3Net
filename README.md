@@ -4,8 +4,19 @@
 [![CI](https://github.com/RP3Net/RP3Net/actions/workflows/python-app.yml/badge.svg)](https://github.com/RP3Net/RP3Net/actions/workflows/python-app.yml)
 [![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/RP3Net/RP3Net/blob/main/rp3_colab.ipynb)
 [![DOI:10.1101/2025.05.13.652824](http://img.shields.io/badge/DOI-10.1101/2021.01.08.425840-B31B1B.svg)](https://doi.org/10.1101/2025.05.13.652824)
+[![PyPI - Version](https://img.shields.io/pypi/v/RP3Net)](https://pypi.org/project/RP3Net/)
 
 RP3Net is an AI model for predicting the results of recombinant small-scale protein production in _E. coli_ from the construct sequence. See [the preprint](https://www.biorxiv.org/content/10.1101/2025.05.13.652824v1) and [supplements](https://ftp.ebi.ac.uk/pub/software/RP3Net/) for more details on how it works.
+
+# Try it out
+The simplest way to run the model inference is to open the [Colab notebook](https://colab.research.google.com/github/RP3Net/RP3Net/blob/main/rp3_colab.ipynb), paste the sequeces in FASTA format into the first cell and hit `Runtime -> Run All`. Note that in this case the sequences will be sent to Google Colab, which may or may not be endorsed by the security/confidentiality policies of your organisation.
+
+## Docker
+Another way to try out the model without disclosing the sequences is by using the [Docker](https://hub.docker.com/r/rp3net/rp3net)/[Singularity](https://cloud.sylabs.io/library/tanhevg/rp3net/rp3net) image: `docker pull rp3net/rp3net`. The image contains the binary installation of the package, the checkpoint, a Jupyter server and the notebook. It supports CUDA. To run the docker contaier from the command line, using mounts to send the data in and out:
+```
+docker run -v /path/to/my/files:/mnt/rp3 rp3net/rp3net rp3 -p rp3net_v0.1_d.ckpt -f /mnt/rp3/sequences.fasta.gz -o /mnt/rp3/scores.csv.gz --log_file /dev/null
+```
+To interact with the container via the notebook, run `docker run -p 8888:8888 rp3net/rp3net jupyter lab`, open http://localhost:8888 in the browser and open `rp3_colab.ipynb`. There is no need to download the checkpoint and install the dependencies.
 
 # Checkpoints
 * https://ftp.ebi.ac.uk/pub/software/RP3Net/v0.1/checkpoints/
