@@ -8,7 +8,7 @@
 RP3Net is an AI model for predicting the results of recombinant small-scale protein production in _E. coli_ from the construct sequence. See [the preprint](https://www.biorxiv.org/content/10.1101/2025.05.13.652824v1) and [supplements](https://ftp.ebi.ac.uk/pub/software/RP3Net/) for more details on how it works.
 
 # Try it out
-The simplest way to run the model inference is to open the [Colab notebook](https://colab.research.google.com/github/RP3Net/RP3Net/blob/main/rp3_colab.ipynb), paste the sequeces in FASTA format into the first cell and hit `Runtime -> Run All`.
+The simplest way to run the model inference is to open the [Colab notebook](https://colab.research.google.com/github/RP3Net/RP3Net/blob/main/rp3_colab.ipynb), paste the sequeces in FASTA format into the first cell and hit `Runtime -> Run All`. Use a runtime with a GPU to speed things up.
 
 ## Docker
 Another way to try out the model without disclosing the sequences is via the [Docker image](https://hub.docker.com/r/rp3net/rp3net): `docker pull rp3net/rp3net`. The image contains the binary installation of the package, the checkpoint, a Jupyter server and the notebook. It supports CUDA. To run the docker contaier from the command line, using mounts to send the data in and out:
