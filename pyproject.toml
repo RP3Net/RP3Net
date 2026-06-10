@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "RP3Net"
-version = "0.0.2a1"
+version = "0.0.2"
 description = "RP3Net: Modelling of recombinant soluble protein production in E. coli"
 readme = "README.md"
 requires-python = ">=3.10,<4.0"
@@ -22,7 +22,7 @@ dependencies = [
     "pandas",
     "transformers==4.46.*",
     "ml_collections",
-    "peft",
+    "peft<0.18",
     "tqdm"
 ]
 
