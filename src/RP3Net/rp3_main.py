@@ -11,7 +11,7 @@ import numpy as np
 import RP3Net.util as util
 import RP3Net.model as model
 
-log = util.get_logger(__file__)
+log = util.get_logger('rp3')
 
 
 def setup_args(_args: Optional[list] = None):
